@@ -34,9 +34,10 @@ Driftcut answers a simpler question first:
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. The `validate` command works today. The `run` command (model execution, decision engine, reports) is coming soon.
+    Driftcut is in active development. The `validate` and `run` commands work today. The decision engine and reports are coming next.
 
 ```bash
 pip install driftcut          # coming soon — install from source for now
 driftcut validate --config migration.yaml
+driftcut run --config migration.yaml
 ```

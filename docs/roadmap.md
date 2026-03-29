@@ -3,7 +3,7 @@
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. Phase 1 is complete. The `validate` command works today; the `run` command is coming soon.
+    Driftcut is in active development. Phases 1–2 are complete. The `validate` and `run` commands work today; the decision engine and reports are coming next.
 
 ---
 
@@ -17,16 +17,18 @@
 - `driftcut validate` CLI command
 - CI pipeline (ruff + pytest on Python 3.12 & 3.13)
 
+### Phase 2 — Migration Runner :white_check_mark:
+
+- Async model execution via LiteLLM (OpenAI, Anthropic, and any LiteLLM-compatible provider)
+- Concurrent execution — baseline and candidate run in parallel per prompt
+- Latency tracker (p50, p95 per category and overall)
+- Cost tracker (per-prompt and cumulative spend)
+- `driftcut run` command — fully wired end-to-end with Rich progress bars
+- JSON results export
+
 ---
 
 ## What's next
-
-### Phase 2 — Migration Runner
-
-- Async model execution via LiteLLM (OpenAI, Anthropic)
-- Latency tracker (p50, p95 per category)
-- Cost tracker (per-prompt and cumulative)
-- Batch-level result storage
 
 ### Phase 3 — Deterministic Checks & Judge
 

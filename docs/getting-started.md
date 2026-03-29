@@ -86,9 +86,6 @@ This prints a summary of your config, corpus stats, and sampling plan — withou
 
 ## Run a migration test
 
-!!! note "Coming soon"
-    The `run` command is under active development and will be available shortly.
-
 ```bash
 driftcut run --config migration.yaml
 ```
@@ -96,6 +93,9 @@ driftcut run --config migration.yaml
 Driftcut will:
 
 1. Sample representative batches from your corpus
-2. Run both models on each batch
-3. Compare quality, latency, and cost
-4. Make a decision: **stop**, **continue**, or **proceed**
+2. Run both models on each batch concurrently
+3. Track latency (p50, p95) and cost per category
+4. Export results to `driftcut-results/results.json`
+
+!!! note "Decision engine coming soon"
+    The `run` command executes the migration and collects results. The automatic stop/continue/proceed decision engine is under development.
