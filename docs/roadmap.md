@@ -3,7 +3,7 @@
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. Phases 1-2 are complete. The `validate` and `run` commands work today; the decision engine and reports are coming next.
+    Driftcut is in active development. Phases 1-4 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, and HTML reporting all work. The next milestone is judge-based comparison for ambiguous cases.
 
 ---
 
@@ -26,31 +26,33 @@
 - `driftcut run` command - fully wired end-to-end with Rich progress bars
 - JSON results export
 
+### Phase 3 - Deterministic Checks :white_check_mark:
+
+- Format-aware deterministic checks
+- JSON validity and required-key checks
+- Required / forbidden content checks
+- Output length guardrails
+- Failure archetype summaries
+
+### Phase 4 - Decision Engine & Reports :white_check_mark:
+
+- Threshold-based `STOP` / `CONTINUE` / `PROCEED` decisions
+- `min_batches` as a real proceed guardrail
+- High-criticality weighting in overall risk
+- Latency thresholds as decision inputs
+- HTML report generation
+- Richer JSON export with decision history
+
 ---
 
 ## What's next
 
-### Phase 3 - Deterministic Checks & Judge
+### Phase 5 - Judge Layer
 
-- Schema validation, format checks, refusal detection (zero-cost)
 - Tiered judge adapter (light -> heavy escalation)
-- Failure archetype classifier
+- Semantic comparison for ambiguous cases
+- Better confidence on borderline migrations
 - Per-category quality scoring
-
-### Phase 4 - Decision Engine
-
-- Early-stop logic with configurable thresholds
-- Category weighting (high-criticality multiplier)
-- Batch-over-batch trend detection
-- Four-way decision output: stop / continue / proceed / proceed-partial
-
-### Phase 5 - Reports & Export
-
-- Rich terminal report with decision, evidence, and failure breakdown
-- JSON export of full results
-- HTML report generation
-- Confidence indicator
-- Threshold proximity display
 
 ### Phase 6 - Polish & Launch
 

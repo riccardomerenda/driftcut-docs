@@ -88,14 +88,14 @@ Controls how prompts are sampled into batches.
 |---|---|---|
 | `batch_size_per_category` | `3` | Prompts drawn per category per batch |
 | `max_batches` | `5` | Hard cap on number of batches |
-| `min_batches` | `2` | Planned decision-engine guardrail for minimum evidence before declaring "proceed" |
+| `min_batches` | `2` | Minimum evidence before Driftcut can declare `PROCEED` |
 
 !!! note "Current alpha behavior"
-    The current runner uses `batch_size_per_category` and `max_batches`. `min_batches` is already part of the config schema, but it becomes active when the decision engine lands.
+    `min_batches` is active in `v0.3.0`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
 
-### `risk` *(parsed, not yet active)*
+### `risk`
 
-Thresholds that will drive the stop/continue/proceed decision. These values are validated at config load time but have no effect on `run` output until the decision engine is implemented. Defaults are conservative - they favor stopping too early over approving a bad candidate.
+Thresholds that drive the stop/continue/proceed decision. Defaults are conservative - they favor stopping too early over approving a bad candidate.
 
 | Field | Default | Description |
 |---|---|---|
@@ -105,11 +105,11 @@ Thresholds that will drive the stop/continue/proceed decision. These values are 
 | `proceed_if_overall_risk_below` | `0.08` | Proceed to full eval if risk stays below this |
 
 !!! tip "Calibrating thresholds"
-    Start with defaults. If you find Driftcut stops too aggressively, raise the thresholds. If it lets bad candidates through, lower them. The report will show how close results are to each threshold boundary once the decision layer is implemented.
+    Start with defaults. If you find Driftcut stops too aggressively, raise the thresholds. If it lets bad candidates through, lower them. The report shows how close results are to each threshold boundary.
 
-### `evaluation` *(parsed, not yet active)*
+### `evaluation`
 
-Controls the judge strategy for semantic comparison. These values are validated at config load time but have no effect until the judge adapter is implemented.
+Controls the planned judge strategy for semantic comparison. In `v0.3.0`, deterministic checks are active and the judge adapter is still future work.
 
 | Field | Default | Description |
 |---|---|---|
@@ -136,7 +136,7 @@ Controls latency tracking and regression detection.
 | `regression_threshold_p95` | `2.0` | Flag if candidate p95 > 2.0x baseline |
 
 !!! note "Current alpha behavior"
-    Latency is measured and reported today. The regression thresholds are validated at config load time and become decision inputs once the quality and decision layers are implemented.
+    Latency is measured and reported today. The regression thresholds are also active decision inputs in `v0.3.0`.
 
 ### `output`
 
@@ -145,7 +145,7 @@ Controls what gets saved after a run.
 | Field | Default | Status | Description |
 |---|---|---|---|
 | `save_json` | `true` | :white_check_mark: | Export results as JSON |
-| `save_html` | `true` | *coming soon* | Generate HTML report |
-| `save_examples` | `true` | *coming soon* | Include failure examples in report |
-| `show_thresholds` | `true` | *coming soon* | Show threshold values in report |
-| `show_confidence` | `true` | *coming soon* | Show confidence indicator |
+| `save_html` | `true` | :white_check_mark: | Generate HTML report |
+| `save_examples` | `true` | :white_check_mark: | Include failure examples in report output |
+| `show_thresholds` | `true` | :white_check_mark: | Show threshold values in report output |
+| `show_confidence` | `true` | :white_check_mark: | Show confidence indicator |

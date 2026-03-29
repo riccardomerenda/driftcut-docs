@@ -13,15 +13,15 @@ pip install -e .
 
 ## Prepare your corpus
 
-Driftcut needs a structured prompt corpus - the real prompts your system uses in production. Each prompt must have a category and criticality level.
+Driftcut needs a structured prompt corpus - the real prompts your system uses in production. Each prompt must have a category and criticality level, and can optionally include deterministic expectations.
 
 === "CSV"
 
     ```csv
-    id,category,prompt,criticality,expected_output_type,notes
-    cx-001,customer_support,"Draft a response to: 'I want a refund'",high,free_text,
-    ex-001,extraction,"Extract entities from: 'Alice at Acme Corp'",high,json,Must return valid JSON
-    cl-001,classification,"Classify this review as positive/negative",medium,labels,
+    id,category,prompt,criticality,expected_output_type,notes,required_substrings,forbidden_substrings,json_required_keys,max_output_chars
+    cx-001,customer_support,"Draft a response to: 'I want a refund'",high,free_text,,refund|replacement,,,
+    ex-001,extraction,"Extract entities from: 'Alice at Acme Corp'",high,json,,,,persons|organizations,
+    cl-001,classification,"Classify this review as positive/negative",medium,labels,,,,,
     ```
 
 === "JSON"
@@ -48,6 +48,10 @@ Driftcut needs a structured prompt corpus - the real prompts your system uses in
 | `criticality` | enum | `low`, `medium`, `high` |
 | `expected_output_type` | enum | `free_text`, `json`, `labels`, `markdown` |
 | `notes` | string | Optional context |
+| `required_substrings` | list-like string | Optional `|` or `;` separated phrases that must appear |
+| `forbidden_substrings` | list-like string | Optional phrases that must not appear |
+| `json_required_keys` | list-like string | Optional keys that must exist in parsed JSON |
+| `max_output_chars` | integer | Optional hard length cap for deterministic checks |
 
 ## Create a config file
 
@@ -170,8 +174,11 @@ Driftcut will:
 
 1. Sample representative batches from your corpus
 2. Run both models on each batch concurrently
-3. Track latency (p50, p95) and cost per category
-4. Export results to `driftcut-results/results.json`
+3. Run deterministic checks on the outputs
+4. Track latency (p50, p95) and cost per category
+5. Emit a `STOP`, `CONTINUE`, or `PROCEED` decision
+6. Export results to `driftcut-results/results.json`
+7. Generate `driftcut-results/report.html`
 
-!!! note "Decision engine coming soon"
-    The `run` command executes the migration and collects results. The automatic stop/continue/proceed decision engine, deterministic quality checks, and judge-based comparison are still under development.
+!!! note "Current alpha behavior"
+    The current runtime uses deterministic checks and threshold-based decisions. Judge-based comparison is still planned for the prompts where deterministic signals are not enough.

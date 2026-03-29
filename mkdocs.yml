@@ -1,6 +1,6 @@
 site_name: Driftcut Docs
 site_url: https://docs.driftcut.dev
-site_description: Documentation for Driftcut, an alpha CLI for LLM migration canaries.
+site_description: Documentation for Driftcut, a v0.3.0 alpha CLI for LLM migration canaries.
 repo_url: https://github.com/riccardomerenda/driftcut
 repo_name: riccardomerenda/driftcut
 edit_uri: ""
