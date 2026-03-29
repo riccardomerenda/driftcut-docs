@@ -1,4 +1,4 @@
-# Configuration Reference
+﻿# Configuration Reference
 
 Driftcut is configured through a single YAML file. All sections except `name`, `models`, and `corpus` have sensible defaults.
 
@@ -31,7 +31,7 @@ risk:
   proceed_if_overall_risk_below: 0.08
 
 evaluation:
-  judge_strategy: tiered
+  judge_strategy: light
   judge_model_light: openai/gpt-4.1-mini
   judge_model_heavy: openai/gpt-4.1
   detect_failure_archetypes: true
@@ -68,7 +68,7 @@ output:
 | `candidate.api_key` | string | Optional. Overrides the environment variable for this model |
 | `candidate.api_base` | string | Optional. Custom API endpoint |
 
-API keys are loaded from environment variables following each provider's convention (e.g. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `OPENROUTER_API_KEY`). You can override per-model with the `api_key` field.
+API keys are loaded from environment variables following each provider's convention such as `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, and `OPENROUTER_API_KEY`. You can override per-model with the `api_key` field.
 
 Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood, so any LiteLLM-supported provider works.
 
@@ -79,6 +79,8 @@ Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood, so any LiteLLM
 | Field | Type | Description |
 |---|---|---|
 | `file` | path | Path to CSV or JSON corpus (relative to config file) |
+
+The current corpus format also supports optional deterministic expectation fields such as `required_substrings`, `forbidden_substrings`, `json_required_keys`, and `max_output_chars`.
 
 ### `sampling`
 
@@ -91,11 +93,11 @@ Controls how prompts are sampled into batches.
 | `min_batches` | `2` | Minimum evidence before Driftcut can declare `PROCEED` |
 
 !!! note "Current alpha behavior"
-    `min_batches` is active in `v0.3.0`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
+    `min_batches` is active in `v0.4.0`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
 
 ### `risk`
 
-Thresholds that drive the stop/continue/proceed decision. Defaults are conservative - they favor stopping too early over approving a bad candidate.
+Thresholds that drive the stop/continue/proceed decision. Defaults are conservative and favor stopping too early over approving a bad candidate.
 
 | Field | Default | Description |
 |---|---|---|
@@ -105,25 +107,25 @@ Thresholds that drive the stop/continue/proceed decision. Defaults are conservat
 | `proceed_if_overall_risk_below` | `0.08` | Proceed to full eval if risk stays below this |
 
 !!! tip "Calibrating thresholds"
-    Start with defaults. If you find Driftcut stops too aggressively, raise the thresholds. If it lets bad candidates through, lower them. The report shows how close results are to each threshold boundary.
+    Start with defaults. If Driftcut stops too aggressively, raise the thresholds. If it lets bad candidates through, lower them. The report shows how close results are to each threshold boundary.
 
 ### `evaluation`
 
-Controls the planned judge strategy for semantic comparison. In `v0.3.0`, deterministic checks are active and the judge adapter is still future work.
+Controls judge behavior for semantic comparison after deterministic checks.
 
 | Field | Default | Description |
 |---|---|---|
-| `judge_strategy` | `tiered` | One of: `none`, `light`, `tiered`, `heavy` |
+| `judge_strategy` | `light` | One of: `none`, `light`, `tiered`, `heavy` |
 | `judge_model_light` | `openai/gpt-4.1-mini` | Model for light judging |
-| `judge_model_heavy` | `openai/gpt-4.1` | Model for heavy judging (ambiguous cases) |
+| `judge_model_heavy` | `openai/gpt-4.1` | Model for heavy judging |
 | `detect_failure_archetypes` | `true` | Classify failures into archetypes |
 
 **Judge strategies:**
 
-- **`none`** - No judge calls. Only deterministic checks (schema, format, refusal). Zero extra cost.
-- **`light`** - Use the light model for all semantic comparisons.
-- **`tiered`** - Deterministic checks first, light judge for ambiguous cases, heavy judge only when still unclear. Best cost/accuracy balance.
-- **`heavy`** - Use the heavy model for all comparisons. Most accurate but most expensive.
+- **`none`** - No judge calls. Only deterministic checks. Zero extra cost.
+- **`light`** - Judge only ambiguous prompts with the light model.
+- **`tiered`** - Currently behaves like `light` for compatibility. Real light-to-heavy escalation is still planned.
+- **`heavy`** - Judge ambiguous prompts with the heavy model instead of the light model.
 
 ### `latency`
 
@@ -132,11 +134,11 @@ Controls latency tracking and regression detection.
 | Field | Default | Description |
 |---|---|---|
 | `track` | `true` | Enable latency measurement |
-| `regression_threshold_p50` | `1.5` | Flag if candidate p50 > 1.5x baseline |
-| `regression_threshold_p95` | `2.0` | Flag if candidate p95 > 2.0x baseline |
+| `regression_threshold_p50` | `1.5` | Flag if candidate p50 is greater than 1.5x baseline |
+| `regression_threshold_p95` | `2.0` | Flag if candidate p95 is greater than 2.0x baseline |
 
 !!! note "Current alpha behavior"
-    Latency is measured and reported today. The regression thresholds are also active decision inputs in `v0.3.0`.
+    Latency is measured and reported today. The thresholds are active decision inputs in `v0.4.0`.
 
 ### `output`
 

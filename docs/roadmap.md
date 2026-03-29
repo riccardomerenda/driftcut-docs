@@ -1,9 +1,9 @@
-# Roadmap
+﻿# Roadmap
 
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. Phases 1-4 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, and HTML reporting all work. The next milestone is judge-based comparison for ambiguous cases.
+    Driftcut is in active development. Phases 1-5 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, and a light judge for ambiguous cases. The next milestone is real light-to-heavy escalation.
 
 ---
 
@@ -20,10 +20,10 @@
 ### Phase 2 - Migration Runner :white_check_mark:
 
 - Async model execution via LiteLLM (OpenAI, Anthropic, and any LiteLLM-compatible provider)
-- Concurrent execution - baseline and candidate run in parallel per prompt
+- Concurrent execution: baseline and candidate run in parallel per prompt
 - Latency tracker (p50, p95 per category and overall)
 - Cost tracker (per-prompt and cumulative spend)
-- `driftcut run` command - fully wired end-to-end with Rich progress bars
+- `driftcut run` command fully wired end-to-end with Rich progress bars
 - JSON results export
 
 ### Phase 3 - Deterministic Checks :white_check_mark:
@@ -43,21 +43,22 @@
 - HTML report generation
 - Richer JSON export with decision history
 
+### Phase 5 - Judge Layer :white_check_mark:
+
+- Semantic comparison for ambiguous cases
+- Judge-aware confidence and cost tracking
+- Judge details in JSON and HTML output
+- `judge_worse` and `judge_unavailable` archetype surfacing
+
 ---
 
 ## What's next
 
-### Phase 5 - Judge Layer
+### Phase 6 - Escalation, Polish & Launch
 
-- Tiered judge adapter (light -> heavy escalation)
-- Semantic comparison for ambiguous cases
-- Better confidence on borderline migrations
-- Per-category quality scoring
-
-### Phase 6 - Polish & Launch
-
-- CLI help and error messages
-- Sample synthetic dataset
+- Real tiered light-to-heavy escalation
+- Better per-category quality scoring
+- Richer failure archetypes beyond deterministic checks and `judge_worse`
 - Public demo benchmark
 - PyPI package publish
 
@@ -65,10 +66,10 @@
 
 ## Future ideas (post-MVP)
 
-These are not committed - they'll be built only if real demand emerges.
+These are not committed. They will only be built if real demand emerges.
 
-- **Sequential hypothesis testing** (SPRT) for formal confidence estimates
-- **Corpus bootstrap helper** - suggest categories and criticality from unstructured prompts
-- **CI/CD integration** - run Driftcut as a migration gate in pipelines
-- **Web dashboard** - history, comparison across runs, team collaboration
-- **Scheduled checks** - periodic canary runs against production models
+- **Sequential hypothesis testing** (SPRT) for more formal confidence estimates
+- **Corpus bootstrap helper** to suggest categories and criticality from unstructured prompts
+- **CI/CD integration** to run Driftcut as a migration gate in pipelines
+- **Web dashboard** for history, cross-run comparison, and collaboration
+- **Scheduled checks** for periodic canary runs against production models

@@ -1,4 +1,4 @@
-# Getting Started
+﻿# Getting Started
 
 ## Installation
 
@@ -13,7 +13,7 @@ pip install -e .
 
 ## Prepare your corpus
 
-Driftcut needs a structured prompt corpus - the real prompts your system uses in production. Each prompt must have a category and criticality level, and can optionally include deterministic expectations.
+Driftcut needs a structured prompt corpus: the real prompts your system uses in production. Each prompt must have a category and criticality level, and can optionally include deterministic expectations.
 
 === "CSV"
 
@@ -78,6 +78,11 @@ Driftcut needs a structured prompt corpus - the real prompts your system uses in
       batch_size_per_category: 3
       max_batches: 5
       min_batches: 2
+
+    evaluation:
+      judge_strategy: light
+      judge_model_light: openai/gpt-4.1-mini
+      judge_model_heavy: openai/gpt-4.1
     ```
 
 === "Same provider"
@@ -139,7 +144,7 @@ Driftcut needs a structured prompt corpus - the real prompts your system uses in
       file: prompts.csv
     ```
 
-Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood - any LiteLLM-supported provider works.
+Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood. Any LiteLLM-supported provider works.
 
 ## Set your API keys
 
@@ -162,7 +167,7 @@ Before spending any money on API calls, validate that your config and corpus are
 driftcut validate --config migration.yaml
 ```
 
-This prints a summary of your config, corpus stats, and sampling plan - without making any API calls.
+This prints a summary of your config, corpus stats, and sampling plan without making any API calls.
 
 ## Run a migration test
 
@@ -175,10 +180,11 @@ Driftcut will:
 1. Sample representative batches from your corpus
 2. Run both models on each batch concurrently
 3. Run deterministic checks on the outputs
-4. Track latency (p50, p95) and cost per category
-5. Emit a `STOP`, `CONTINUE`, or `PROCEED` decision
-6. Export results to `driftcut-results/results.json`
-7. Generate `driftcut-results/report.html`
+4. Judge ambiguous prompts when the strategy is enabled
+5. Track latency plus baseline, candidate, and judge cost
+6. Emit a `STOP`, `CONTINUE`, or `PROCEED` decision
+7. Export results to `driftcut-results/results.json`
+8. Generate `driftcut-results/report.html`
 
 !!! note "Current alpha behavior"
-    The current runtime uses deterministic checks and threshold-based decisions. Judge-based comparison is still planned for the prompts where deterministic signals are not enough.
+    `judge_strategy: light` compares only ambiguous prompts. `judge_strategy: heavy` uses the heavy judge directly. `judge_strategy: tiered` is currently a compatibility alias for `light` until real escalation lands.
