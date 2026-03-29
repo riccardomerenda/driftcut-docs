@@ -88,11 +88,14 @@ Controls how prompts are sampled into batches.
 |---|---|---|
 | `batch_size_per_category` | `3` | Prompts drawn per category per batch |
 | `max_batches` | `5` | Hard cap on number of batches |
-| `min_batches` | `2` | Minimum batches before declaring "proceed" |
+| `min_batches` | `2` | Planned decision-engine guardrail for minimum evidence before declaring "proceed" |
+
+!!! note "Current alpha behavior"
+    The current runner uses `batch_size_per_category` and `max_batches`. `min_batches` is already part of the config schema, but it becomes active when the decision engine lands.
 
 ### `risk` *(parsed, not yet active)*
 
-Thresholds that will drive the stop/continue/proceed decision. These values are validated at config load time but have no effect on `run` output until the decision engine is implemented. Defaults are conservative — they favor stopping too early over approving a bad candidate.
+Thresholds that will drive the stop/continue/proceed decision. These values are validated at config load time but have no effect on `run` output until the decision engine is implemented. Defaults are conservative - they favor stopping too early over approving a bad candidate.
 
 | Field | Default | Description |
 |---|---|---|
@@ -102,7 +105,7 @@ Thresholds that will drive the stop/continue/proceed decision. These values are 
 | `proceed_if_overall_risk_below` | `0.08` | Proceed to full eval if risk stays below this |
 
 !!! tip "Calibrating thresholds"
-    Start with defaults. If you find Driftcut stops too aggressively, raise the thresholds. If it lets bad candidates through, lower them. The report shows how close results are to each threshold boundary.
+    Start with defaults. If you find Driftcut stops too aggressively, raise the thresholds. If it lets bad candidates through, lower them. The report will show how close results are to each threshold boundary once the decision layer is implemented.
 
 ### `evaluation` *(parsed, not yet active)*
 
@@ -117,10 +120,10 @@ Controls the judge strategy for semantic comparison. These values are validated 
 
 **Judge strategies:**
 
-- **`none`** — No judge calls. Only deterministic checks (schema, format, refusal). Zero extra cost.
-- **`light`** — Use the light model for all semantic comparisons.
-- **`tiered`** — Deterministic checks first, light judge for ambiguous cases, heavy judge only when still unclear. Best cost/accuracy balance.
-- **`heavy`** — Use the heavy model for all comparisons. Most accurate but most expensive.
+- **`none`** - No judge calls. Only deterministic checks (schema, format, refusal). Zero extra cost.
+- **`light`** - Use the light model for all semantic comparisons.
+- **`tiered`** - Deterministic checks first, light judge for ambiguous cases, heavy judge only when still unclear. Best cost/accuracy balance.
+- **`heavy`** - Use the heavy model for all comparisons. Most accurate but most expensive.
 
 ### `latency`
 
@@ -131,6 +134,9 @@ Controls latency tracking and regression detection.
 | `track` | `true` | Enable latency measurement |
 | `regression_threshold_p50` | `1.5` | Flag if candidate p50 > 1.5x baseline |
 | `regression_threshold_p95` | `2.0` | Flag if candidate p95 > 2.0x baseline |
+
+!!! note "Current alpha behavior"
+    Latency is measured and reported today. The regression thresholds are validated at config load time and become decision inputs once the quality and decision layers are implemented.
 
 ### `output`
 

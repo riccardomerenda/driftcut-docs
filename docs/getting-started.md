@@ -13,7 +13,7 @@ pip install -e .
 
 ## Prepare your corpus
 
-Driftcut needs a structured prompt corpus — the real prompts your system uses in production. Each prompt must have a category and criticality level.
+Driftcut needs a structured prompt corpus - the real prompts your system uses in production. Each prompt must have a category and criticality level.
 
 === "CSV"
 
@@ -135,7 +135,7 @@ Driftcut needs a structured prompt corpus — the real prompts your system uses 
       file: prompts.csv
     ```
 
-Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood — any LiteLLM-supported provider works.
+Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood - any LiteLLM-supported provider works.
 
 ## Set your API keys
 
@@ -158,7 +158,7 @@ Before spending any money on API calls, validate that your config and corpus are
 driftcut validate --config migration.yaml
 ```
 
-This prints a summary of your config, corpus stats, and sampling plan — without making any API calls.
+This prints a summary of your config, corpus stats, and sampling plan - without making any API calls.
 
 ## Run a migration test
 
@@ -174,4 +174,4 @@ Driftcut will:
 4. Export results to `driftcut-results/results.json`
 
 !!! note "Decision engine coming soon"
-    The `run` command executes the migration and collects results. The automatic stop/continue/proceed decision engine is under development.
+    The `run` command executes the migration and collects results. The automatic stop/continue/proceed decision engine, deterministic quality checks, and judge-based comparison are still under development.
