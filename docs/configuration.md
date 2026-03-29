@@ -84,9 +84,9 @@ Controls how prompts are sampled into batches.
 | `max_batches` | `5` | Hard cap on number of batches |
 | `min_batches` | `2` | Minimum batches before declaring "proceed" |
 
-### `risk`
+### `risk` *(parsed, not yet active)*
 
-Thresholds that drive the stop/continue/proceed decision. Defaults are conservative — they favor stopping too early over approving a bad candidate.
+Thresholds that will drive the stop/continue/proceed decision. These values are validated at config load time but have no effect on `run` output until the decision engine is implemented. Defaults are conservative — they favor stopping too early over approving a bad candidate.
 
 | Field | Default | Description |
 |---|---|---|
@@ -98,9 +98,9 @@ Thresholds that drive the stop/continue/proceed decision. Defaults are conservat
 !!! tip "Calibrating thresholds"
     Start with defaults. If you find Driftcut stops too aggressively, raise the thresholds. If it lets bad candidates through, lower them. The report shows how close results are to each threshold boundary.
 
-### `evaluation`
+### `evaluation` *(parsed, not yet active)*
 
-Controls the judge strategy for semantic comparison.
+Controls the judge strategy for semantic comparison. These values are validated at config load time but have no effect until the judge adapter is implemented.
 
 | Field | Default | Description |
 |---|---|---|
@@ -130,10 +130,10 @@ Controls latency tracking and regression detection.
 
 Controls what gets saved after a run.
 
-| Field | Default | Description |
-|---|---|---|
-| `save_json` | `true` | Export results as JSON |
-| `save_html` | `true` | Generate HTML report |
-| `save_examples` | `true` | Include failure examples in report |
-| `show_thresholds` | `true` | Show threshold values in report |
-| `show_confidence` | `true` | Show confidence indicator |
+| Field | Default | Status | Description |
+|---|---|---|---|
+| `save_json` | `true` | :white_check_mark: | Export results as JSON |
+| `save_html` | `true` | *coming soon* | Generate HTML report |
+| `save_examples` | `true` | *coming soon* | Include failure examples in report |
+| `show_thresholds` | `true` | *coming soon* | Show threshold values in report |
+| `show_confidence` | `true` | *coming soon* | Show confidence indicator |

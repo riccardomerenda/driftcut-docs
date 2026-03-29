@@ -72,7 +72,16 @@ sampling:
   min_batches: 2
 ```
 
-API keys are loaded from environment variables (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`).
+## Set your API keys
+
+The `run` command calls real model APIs. Set environment variables before running:
+
+```bash
+export OPENAI_API_KEY="sk-..."
+export ANTHROPIC_API_KEY="sk-ant-..."
+```
+
+Only the providers used in your config need keys. The `validate` command does not require API keys.
 
 ## Validate your setup
 

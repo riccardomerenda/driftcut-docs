@@ -1,5 +1,8 @@
 # Concept
 
+!!! info "Design document"
+    This page describes Driftcut's design philosophy and planned architecture. Features marked with :white_check_mark: are implemented; others are under development. See the [Roadmap](roadmap.md) for current status.
+
 ## Core insight
 
 Driftcut doesn't do a complete evaluation. It answers a simpler, earlier question:
@@ -31,11 +34,11 @@ If your team already uses an eval framework for full evaluations, Driftcut sits 
 
 Instead of evaluating the entire corpus, Driftcut:
 
-1. **Divides** the corpus into categories.
-2. **Samples** small, representative batches — prioritizing high-criticality prompts.
-3. **Compares** baseline and candidate on quality and latency.
-4. **Detects** divergence and failure patterns.
-5. **Decides**: stop the test, continue sampling, or declare the candidate ready for full evaluation.
+1. **Divides** the corpus into categories. :white_check_mark:
+2. **Samples** small, representative batches — prioritizing high-criticality prompts. :white_check_mark:
+3. **Compares** baseline and candidate on latency and cost. :white_check_mark:
+4. **Detects** divergence and failure patterns. *(coming soon)*
+5. **Decides**: stop the test, continue sampling, or declare the candidate ready for full evaluation. *(coming soon)*
 
 The value is **avoiding the discovery — too late — that the test was going badly**.
 
@@ -45,19 +48,19 @@ The value is **avoiding the discovery — too late — that the test was going b
 
 Migration isn't just about output quality. Driftcut compares baseline and candidate across three dimensions:
 
-### Quality
+### Quality *(coming soon)*
 
 Output quality relative to the baseline: format adherence, completeness, correctness, absence of hallucination.
 
-Measured through judge models and failure archetypes.
+Will be measured through judge models and failure archetypes.
 
-### Latency
+### Latency :white_check_mark:
 
 Response time of the candidate relative to the baseline.
 
 For many teams, latency is the primary driver of migration — or the reason it fails. Driftcut measures p50, p95, and variance per category, and flags significant latency regressions even when quality is stable.
 
-### Cost
+### Cost :white_check_mark:
 
 Per-prompt cost and total run cost.
 
@@ -65,7 +68,7 @@ Driftcut tracks progressive spend and the spend avoided by stopping an unpromisi
 
 ---
 
-## Decision engine
+## Decision engine *(coming soon)*
 
 The decision engine is heuristic-based and explicitly designed as **decision support**, not an infallible oracle.
 
@@ -108,9 +111,9 @@ You can and should calibrate them via config. The report shows how close results
 
 ---
 
-## Failure archetypes
+## Failure archetypes *(coming soon)*
 
-The report doesn't just say "quality drop." It classifies _why_:
+The report won't just say "quality drop." It will classify _why_:
 
 | Archetype | Description |
 |---|---|
@@ -127,13 +130,13 @@ This turns an abstract score into actionable information.
 
 ---
 
-## The judge cost paradox
+## The judge cost paradox *(coming soon)*
 
 Driftcut promises to save budget. But if every comparison requires a judge model call, the judge cost can become significant.
 
 ### Tiered strategy
 
-Driftcut solves this with progressive judge levels:
+Driftcut will solve this with progressive judge levels:
 
 1. **Deterministic checks (zero cost)** — Is the output valid JSON? Does it match the schema? Is it a refusal? These catch the most obvious failures without spending anything.
 
