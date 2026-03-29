@@ -59,12 +59,18 @@ output:
 
 | Field | Type | Description |
 |---|---|---|
-| `baseline.provider` | string | Provider name (e.g. `openai`, `anthropic`) |
+| `baseline.provider` | string | Provider name (e.g. `openai`, `anthropic`, `openrouter`) |
 | `baseline.model` | string | Model identifier |
+| `baseline.api_key` | string | Optional. Overrides the environment variable for this model |
+| `baseline.api_base` | string | Optional. Custom API endpoint (for proxies, Azure, self-hosted) |
 | `candidate.provider` | string | Provider name |
 | `candidate.model` | string | Model identifier |
+| `candidate.api_key` | string | Optional. Overrides the environment variable for this model |
+| `candidate.api_base` | string | Optional. Custom API endpoint |
 
-API keys are loaded from environment variables following each provider's convention (e.g. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`).
+API keys are loaded from environment variables following each provider's convention (e.g. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `OPENROUTER_API_KEY`). You can override per-model with the `api_key` field.
+
+Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood, so any LiteLLM-supported provider works.
 
 ### `corpus`
 

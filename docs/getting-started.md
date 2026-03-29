@@ -51,34 +51,101 @@ Driftcut needs a structured prompt corpus — the real prompts your system uses 
 
 ## Create a config file
 
-```yaml
-# migration.yaml
-name: "GPT-4o to Claude Haiku migration gate"
+=== "Cross-provider"
 
-models:
-  baseline:
-    provider: openai
-    model: gpt-4o
-  candidate:
-    provider: anthropic
-    model: claude-haiku
+    Compare models from different providers (requires both API keys):
 
-corpus:
-  file: prompts.csv
+    ```yaml
+    # migration.yaml
+    name: "GPT-4o to Claude Haiku migration gate"
 
-sampling:
-  batch_size_per_category: 3
-  max_batches: 5
-  min_batches: 2
-```
+    models:
+      baseline:
+        provider: openai
+        model: gpt-4o
+      candidate:
+        provider: anthropic
+        model: claude-haiku
+
+    corpus:
+      file: prompts.csv
+
+    sampling:
+      batch_size_per_category: 3
+      max_batches: 5
+      min_batches: 2
+    ```
+
+=== "Same provider"
+
+    Compare models from the same provider (one API key):
+
+    ```yaml
+    name: "GPT-4o to GPT-4o-mini cost reduction"
+
+    models:
+      baseline:
+        provider: openai
+        model: gpt-4o
+      candidate:
+        provider: openai
+        model: gpt-4o-mini
+
+    corpus:
+      file: prompts.csv
+    ```
+
+=== "OpenRouter"
+
+    Use OpenRouter to access any model with a single API key:
+
+    ```yaml
+    name: "GPT-4o to Claude Haiku via OpenRouter"
+
+    models:
+      baseline:
+        provider: openrouter
+        model: openai/gpt-4o
+      candidate:
+        provider: openrouter
+        model: anthropic/claude-3.5-haiku
+
+    corpus:
+      file: prompts.csv
+    ```
+
+=== "Custom endpoint"
+
+    Use `api_base` for Azure, proxies, or self-hosted models:
+
+    ```yaml
+    name: "Azure GPT-4o to local Llama"
+
+    models:
+      baseline:
+        provider: azure
+        model: gpt-4o
+        api_base: https://my-deployment.openai.azure.com
+      candidate:
+        provider: openai
+        model: meta-llama/llama-3-8b
+        api_base: http://localhost:8000/v1
+
+    corpus:
+      file: prompts.csv
+    ```
+
+Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood — any LiteLLM-supported provider works.
 
 ## Set your API keys
 
-The `run` command calls real model APIs. Set environment variables before running:
+The `run` command calls real model APIs. Set the environment variable for your provider(s):
 
 ```bash
+# Set the key(s) for the providers in your config
 export OPENAI_API_KEY="sk-..."
 export ANTHROPIC_API_KEY="sk-ant-..."
+export OPENROUTER_API_KEY="sk-or-..."
 ```
 
 Only the providers used in your config need keys. The `validate` command does not require API keys.
