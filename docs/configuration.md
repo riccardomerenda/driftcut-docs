@@ -1,4 +1,4 @@
-﻿# Configuration Reference
+# Configuration Reference
 
 Driftcut is configured through a single YAML file. All sections except `name` and `models` have sensible defaults. `corpus` is required for live `run`, but replay mode gets prompt metadata from the replay input file instead.
 
@@ -72,6 +72,9 @@ API keys are loaded from environment variables following each provider's convent
 
 Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood, so any LiteLLM-supported provider works.
 
+!!! note "Live call reliability"
+    In `v0.5.1`, live `run` calls automatically retry transient rate limits, timeouts, connection failures, and 5xx responses before Driftcut records an `api_error`. Saved JSON artifacts include `retry_count` for each baseline/candidate response.
+
 ### `corpus`
 
 **Required.** Points to the prompt corpus file.
@@ -93,7 +96,7 @@ Controls how prompts are sampled into batches.
 | `min_batches` | `2` | Minimum evidence before Driftcut can declare `PROCEED` |
 
 !!! note "Current alpha behavior"
-    `min_batches` is active in `v0.5.0`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
+    `min_batches` is active in `v0.5.1`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
 
 ### `risk`
 
@@ -138,7 +141,7 @@ Controls latency tracking and regression detection.
 | `regression_threshold_p95` | `2.0` | Flag if candidate p95 is greater than 2.0x baseline |
 
 !!! note "Current alpha behavior"
-    Latency is measured and reported today. The thresholds are active decision inputs in `v0.5.0`.
+    Latency is measured and reported today. The thresholds are active decision inputs in `v0.5.1`.
 
 ### Replay mode
 

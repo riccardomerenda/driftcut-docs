@@ -1,4 +1,4 @@
-﻿# Getting Started
+# Getting Started
 
 ## Installation
 
@@ -179,15 +179,76 @@ Driftcut will:
 
 1. Sample representative batches from your corpus
 2. Run both models on each batch concurrently
-3. Run deterministic checks on the outputs
-4. Judge ambiguous prompts when the strategy is enabled
-5. Track latency plus baseline, candidate, and judge cost
-6. Emit a `STOP`, `CONTINUE`, or `PROCEED` decision
-7. Export results to `driftcut-results/results.json`
-8. Generate `driftcut-results/report.html`
+3. Retry transient provider failures before counting an API error
+4. Run deterministic checks on the outputs
+5. Judge ambiguous prompts when the strategy is enabled
+6. Track latency plus baseline, candidate, and judge cost
+7. Emit a `STOP`, `CONTINUE`, or `PROCEED` decision
+8. Export results to `driftcut-results/results.json`
+9. Generate `driftcut-results/report.html`
 
 !!! note "Current alpha behavior"
     `judge_strategy: light` compares only ambiguous prompts. `judge_strategy: heavy` uses the heavy judge directly. `judge_strategy: tiered` is currently a compatibility alias for `light` until real escalation lands.
+
+### What the output looks like
+
+Terminal summary:
+
+```text
+$ driftcut run --config migration.yaml
+
+GPT-4o to Claude Haiku migration gate
+  Mode:      live
+  Baseline:  openai/gpt-4o
+  Candidate: anthropic/claude-haiku
+
+  Batch 1: 12 prompts, 0 API errors, $0.1840 cumulative
+    Decision: CONTINUE (58% confidence)
+    Judge coverage: 3/3 ambiguous prompts
+    Risk is still borderline after the first sampled batch.
+
+  Batch 2: 12 prompts, 0 API errors, $0.3120 cumulative
+    Decision: PROCEED (82% confidence)
+    Judge coverage: 4/4 ambiguous prompts
+    Risk stayed below the configured proceed threshold.
+
+Run complete
+  Prompts tested: 24/30
+  Batches tested: 2
+  Total cost:     $0.3120
+  Judge cost:     $0.0280
+  Decision:       PROCEED (82% confidence)
+```
+
+`driftcut-results/results.json` excerpt:
+
+```json
+{
+  "mode": "live",
+  "decision": {
+    "outcome": "PROCEED",
+    "confidence": 0.82
+  },
+  "batches": [
+    {
+      "batch_number": 1,
+      "results": [
+        {
+          "prompt_id": "cx-001",
+          "candidate": {
+            "latency_ms": 640.0,
+            "retry_count": 1,
+            "cost_usd": 0.009,
+            "error": null
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+The HTML report in `driftcut-results/report.html` packages the same run as a shareable summary with threshold context, latency/cost views, failure archetypes, and prompt examples.
 
 ## Replay a historical comparison
 
