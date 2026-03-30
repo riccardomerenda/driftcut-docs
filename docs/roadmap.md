@@ -3,7 +3,7 @@
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. Phases 1-5 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, and a light judge for ambiguous cases. The next milestone is real light-to-heavy escalation.
+    Driftcut is in active development. Phases 1-6 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, a light judge for ambiguous cases, and historical replay. The next milestone is real light-to-heavy escalation.
 
 ---
 
@@ -50,11 +50,18 @@
 - Judge details in JSON and HTML output
 - `judge_worse` and `judge_unavailable` archetype surfacing
 
+### Phase 6 - Replay Mode :white_check_mark:
+
+- `driftcut replay` for historical paired-output backtesting
+- Canonical replay JSON contract with prompt metadata
+- Shared deterministic checks, judge flow, and decision engine between live and replay
+- Replay-aware JSON and HTML report labeling
+
 ---
 
 ## What's next
 
-### Phase 6 - Escalation, Polish & Launch
+### Phase 7 - Escalation, Polish & Launch
 
 - Real tiered light-to-heavy escalation
 - Better per-category quality scoring

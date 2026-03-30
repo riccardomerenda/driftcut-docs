@@ -188,3 +188,16 @@ Driftcut will:
 
 !!! note "Current alpha behavior"
     `judge_strategy: light` compares only ambiguous prompts. `judge_strategy: heavy` uses the heavy judge directly. `judge_strategy: tiered` is currently a compatibility alias for `light` until real escalation lands.
+
+## Replay a historical comparison
+
+If you already have paired baseline/candidate outputs, you can replay them through the same deterministic checks, judge flow, and decision engine without re-calling the models.
+
+```bash
+driftcut replay --config examples/replay.yaml --input examples/replay.json
+```
+
+Replay mode expects a canonical JSON payload with prompt metadata plus nested `baseline` and `candidate` outputs. The replay path is intentionally narrow: it is for historical Driftcut backtests, not arbitrary vendor export ingestion.
+
+!!! note "Replay semantics"
+    Replay can still incur judge cost if semantic judging is enabled. Historical latency fields are required when `latency.track=true`.

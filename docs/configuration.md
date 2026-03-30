@@ -1,6 +1,6 @@
 ﻿# Configuration Reference
 
-Driftcut is configured through a single YAML file. All sections except `name`, `models`, and `corpus` have sensible defaults.
+Driftcut is configured through a single YAML file. All sections except `name` and `models` have sensible defaults. `corpus` is required for live `run`, but replay mode gets prompt metadata from the replay input file instead.
 
 ## Full example
 
@@ -93,7 +93,7 @@ Controls how prompts are sampled into batches.
 | `min_batches` | `2` | Minimum evidence before Driftcut can declare `PROCEED` |
 
 !!! note "Current alpha behavior"
-    `min_batches` is active in `v0.4.0`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
+    `min_batches` is active in `v0.5.0`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
 
 ### `risk`
 
@@ -138,7 +138,24 @@ Controls latency tracking and regression detection.
 | `regression_threshold_p95` | `2.0` | Flag if candidate p95 is greater than 2.0x baseline |
 
 !!! note "Current alpha behavior"
-    Latency is measured and reported today. The thresholds are active decision inputs in `v0.4.0`.
+    Latency is measured and reported today. The thresholds are active decision inputs in `v0.5.0`.
+
+### Replay mode
+
+Replay mode uses the same `sampling`, `risk`, `evaluation`, `latency`, and `output` sections, but it reads prompt metadata plus paired baseline/candidate outputs from a canonical replay JSON file:
+
+```bash
+driftcut replay --config replay.yaml --input replay.json
+```
+
+The replay input contract is versioned and intentionally narrow. Each record must include:
+
+- prompt metadata such as `id`, `category`, `prompt`, `criticality`, and `expected_output_type`
+- nested `baseline` and `candidate` objects
+- either `output` or `error` for each side
+- `latency_ms` when `latency.track=true`
+
+Historical model cost is optional. Replay-time judge cost is tracked separately in the report when semantic judging is enabled.
 
 ### `output`
 
