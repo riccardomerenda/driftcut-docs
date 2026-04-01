@@ -3,7 +3,7 @@
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. Phases 1-6 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, a light judge for ambiguous cases, and historical replay. The next milestone is real light-to-heavy escalation.
+    Driftcut is in active development. Phases 1-6 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, and historical replay. The next milestone is richer failure archetypes plus stronger quality scoring.
 
 ---
 
@@ -61,9 +61,8 @@
 
 ## What's next
 
-### Phase 7 - Escalation, Polish & Launch
+### Phase 7 - Quality Scoring, Polish & Launch
 
-- Real tiered light-to-heavy escalation
 - Better per-category quality scoring
 - Richer failure archetypes beyond deterministic checks and `judge_worse`
 - Public demo benchmark

@@ -1,6 +1,6 @@
 ﻿site_name: Driftcut Docs
 site_url: https://docs.driftcut.dev
-site_description: Documentation for Driftcut, a v0.5.1 alpha CLI for LLM migration canaries with live runs, replay mode, deterministic checks, transient retries, judge support for ambiguous prompts, and STOP/CONTINUE/PROCEED decisions.
+site_description: Documentation for Driftcut, a v0.6.0 alpha CLI for LLM migration canaries with live runs, replay mode, deterministic checks, tiered judge escalation, and STOP/CONTINUE/PROCEED decisions.
 repo_url: https://github.com/riccardomerenda/driftcut
 repo_name: riccardomerenda/driftcut
 edit_uri: ""

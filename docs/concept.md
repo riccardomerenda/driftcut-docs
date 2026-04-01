@@ -55,7 +55,7 @@ Migration isn't just about output quality. Driftcut compares baseline and candid
 
 Output quality relative to the baseline: format adherence, completeness, correctness, absence of obvious structural breaks.
 
-The current alpha already combines deterministic checks with optional judge-based comparison for ambiguous prompts. The next quality milestone is real light-to-heavy escalation plus richer archetypes beyond the current deterministic set and `judge_worse`.
+The current alpha already combines deterministic checks with tiered judge-based comparison for ambiguous prompts. The next quality milestones are richer archetypes beyond the current deterministic set and `judge_worse`, plus better per-category quality scoring.
 
 ### Latency :white_check_mark:
 
@@ -145,7 +145,7 @@ Driftcut addresses this with progressive judge levels:
 
 2. **Light judge** - For prompts that pass deterministic checks, a small, cheap model (e.g. GPT-4.1-mini) handles general quality comparison.
 
-3. **Heavy judge** - Today you can choose the heavy judge directly. Real automatic escalation from light to heavy is still the next milestone.
+3. **Heavy judge** - With `judge_strategy: tiered`, Driftcut escalates automatically when the light judge confidence falls below `tiered_escalation_threshold`. You can also choose the heavy judge directly.
 
 A typical canary run (120 prompts, 20% tested, 24 prompts) costs roughly $0.50-$2.00 in judge calls - a fraction of a full evaluation.
 
@@ -153,7 +153,7 @@ A typical canary run (120 prompts, 20% tested, 24 prompts) costs roughly $0.50-$
 
 ## Statistical confidence
 
-### Current approach (v0.5.1)
+### Current approach (v0.6.0)
 
 Driftcut uses a pragmatic approach:
 

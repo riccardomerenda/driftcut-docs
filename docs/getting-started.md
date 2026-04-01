@@ -80,9 +80,10 @@ Driftcut needs a structured prompt corpus: the real prompts your system uses in 
       min_batches: 2
 
     evaluation:
-      judge_strategy: light
+      judge_strategy: tiered
       judge_model_light: openai/gpt-4.1-mini
       judge_model_heavy: openai/gpt-4.1
+      tiered_escalation_threshold: 0.6
     ```
 
 === "Same provider"
@@ -188,7 +189,7 @@ Driftcut will:
 9. Generate `driftcut-results/report.html`
 
 !!! note "Current alpha behavior"
-    `judge_strategy: light` compares only ambiguous prompts. `judge_strategy: heavy` uses the heavy judge directly. `judge_strategy: tiered` is currently a compatibility alias for `light` until real escalation lands.
+    `judge_strategy: light` compares only ambiguous prompts. `judge_strategy: heavy` uses the heavy judge directly. `judge_strategy: tiered` calls the light judge first and escalates to the heavy judge when confidence is below `tiered_escalation_threshold`.
 
 ### What the output looks like
 

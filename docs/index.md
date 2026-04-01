@@ -2,7 +2,7 @@
 
 **Early-stop decision gating for LLM model migrations.**
 
-v0.5.1 alpha CLI for sampling migration candidates before you commit to a full evaluation.
+v0.6.0 alpha CLI for sampling migration candidates before you commit to a full evaluation.
 
 ---
 
@@ -35,7 +35,7 @@ Driftcut answers a simpler question first:
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. The current alpha already ships deterministic checks, judge-based comparison for ambiguous prompts, historical replay, failure archetype summaries, and `STOP` / `CONTINUE` / `PROCEED` decisions.
+    Driftcut is in active development. The current alpha already ships deterministic checks, tiered judge escalation for ambiguous prompts, historical replay, failure archetype summaries, and `STOP` / `CONTINUE` / `PROCEED` decisions.
 
 ### What works today
 
@@ -45,7 +45,7 @@ Driftcut answers a simpler question first:
 - Transient retry handling for rate limits, timeouts, connection failures, and 5xxs
 - Historical replay on canonical paired-output JSON
 - Deterministic checks for format, JSON validity, required content, and output length limits
-- Judge-based comparison for ambiguous prompts
+- Tiered judging with light-to-heavy escalation for ambiguous prompts
 - Latency tracking plus baseline, candidate, and judge cost tracking
 - `STOP` / `CONTINUE` / `PROCEED` decisions during the run
 - JSON results export
@@ -53,7 +53,7 @@ Driftcut answers a simpler question first:
 
 ### What comes next
 
-- Real light-to-heavy escalation for judge calls
+- Better per-category quality scoring
 - Richer failure archetypes beyond deterministic checks and `judge_worse`
 - More polished reports and benchmark demos
 

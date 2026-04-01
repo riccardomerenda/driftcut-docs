@@ -31,9 +31,10 @@ risk:
   proceed_if_overall_risk_below: 0.08
 
 evaluation:
-  judge_strategy: light
+  judge_strategy: tiered
   judge_model_light: openai/gpt-4.1-mini
   judge_model_heavy: openai/gpt-4.1
+  tiered_escalation_threshold: 0.6
   detect_failure_archetypes: true
 
 latency:
@@ -73,7 +74,7 @@ API keys are loaded from environment variables following each provider's convent
 Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood, so any LiteLLM-supported provider works.
 
 !!! note "Live call reliability"
-    In `v0.5.1`, live `run` calls automatically retry transient rate limits, timeouts, connection failures, and 5xx responses before Driftcut records an `api_error`. Saved JSON artifacts include `retry_count` for each baseline/candidate response.
+    In `v0.6.0`, live `run` calls automatically retry transient rate limits, timeouts, connection failures, and 5xx responses before Driftcut records an `api_error`. Saved JSON artifacts include `retry_count` for each baseline/candidate response.
 
 ### `corpus`
 
@@ -96,7 +97,7 @@ Controls how prompts are sampled into batches.
 | `min_batches` | `2` | Minimum evidence before Driftcut can declare `PROCEED` |
 
 !!! note "Current alpha behavior"
-    `min_batches` is active in `v0.5.1`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
+    `min_batches` is active in `v0.6.0`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
 
 ### `risk`
 
@@ -121,13 +122,14 @@ Controls judge behavior for semantic comparison after deterministic checks.
 | `judge_strategy` | `light` | One of: `none`, `light`, `tiered`, `heavy` |
 | `judge_model_light` | `openai/gpt-4.1-mini` | Model for light judging |
 | `judge_model_heavy` | `openai/gpt-4.1` | Model for heavy judging |
+| `tiered_escalation_threshold` | `0.6` | Escalate from light to heavy when confidence falls below this threshold |
 | `detect_failure_archetypes` | `true` | Classify failures into archetypes |
 
 **Judge strategies:**
 
 - **`none`** - No judge calls. Only deterministic checks. Zero extra cost.
 - **`light`** - Judge only ambiguous prompts with the light model.
-- **`tiered`** - Currently behaves like `light` for compatibility. Real light-to-heavy escalation is still planned.
+- **`tiered`** - Judge ambiguous prompts with the light model first, then escalate to the heavy model when confidence is below `tiered_escalation_threshold`.
 - **`heavy`** - Judge ambiguous prompts with the heavy model instead of the light model.
 
 ### `latency`
@@ -141,7 +143,7 @@ Controls latency tracking and regression detection.
 | `regression_threshold_p95` | `2.0` | Flag if candidate p95 is greater than 2.0x baseline |
 
 !!! note "Current alpha behavior"
-    Latency is measured and reported today. The thresholds are active decision inputs in `v0.5.1`.
+    Latency is measured and reported today. The thresholds are active decision inputs in `v0.6.0`.
 
 ### Replay mode
 
