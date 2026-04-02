@@ -11,6 +11,30 @@ cd driftcut
 pip install -e .
 ```
 
+For local Redis-memory testing without Docker, install the optional extra too:
+
+```bash
+pip install -e ".[dev,redis]"
+```
+
+### Docker + Redis
+
+For a reproducible local stack, the app repo also ships a `Dockerfile` and `docker-compose.yml`:
+
+```bash
+docker compose up -d redis
+docker compose run --rm driftcut driftcut validate --config examples/migration.yaml
+```
+
+To test the optional Redis-backed memory layer, run the Redis-enabled sample twice:
+
+```bash
+docker compose run --rm driftcut driftcut run --config examples/migration.redis.yaml
+docker compose run --rm driftcut driftcut run --config examples/migration.redis.yaml
+```
+
+The second run should report baseline cache hits in the terminal summary and `driftcut-results/results.json`.
+
 ## Prepare your corpus
 
 Driftcut needs a structured prompt corpus: the real prompts your system uses in production. Each prompt must have a category and criticality level, and can optionally include deterministic expectations.
@@ -183,7 +207,7 @@ Driftcut will:
 3. Retry transient provider failures before counting an API error
 4. Run deterministic checks on the outputs
 5. Judge ambiguous prompts when the strategy is enabled
-6. Track latency plus baseline, candidate, and judge cost
+6. Track latency plus baseline, candidate, and judge cost, plus optional memory stats when enabled
 7. Emit a `STOP`, `CONTINUE`, or `PROCEED` decision
 8. Export results to `driftcut-results/results.json`
 9. Generate `driftcut-results/report.html`
@@ -249,7 +273,11 @@ Run complete
 }
 ```
 
-The HTML report in `driftcut-results/report.html` packages the same run as a shareable summary with threshold context, latency/cost views, failure archetypes, and prompt examples.
+The HTML report in `driftcut-results/report.html` packages the same run as a shareable summary with threshold context, latency/cost views, failure archetypes, prompt examples, and optional cache visibility.
+
+## Optional Redis memory
+
+If you add a `memory` section to your config, Driftcut can reuse cached baseline responses across repeated live runs and persist full run documents to Redis. Replay mode does not use response caching, but it can still persist run history when memory is enabled.
 
 ## Replay a historical comparison
 

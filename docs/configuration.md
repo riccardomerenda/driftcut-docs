@@ -162,6 +162,39 @@ The replay input contract is versioned and intentionally narrow. Each record mus
 
 Historical model cost is optional. Replay-time judge cost is tracked separately in the report when semantic judging is enabled.
 
+### `memory`
+
+Optional. Enables the Redis-backed memory layer for baseline response caching and run-history persistence.
+
+```yaml
+memory:
+  backend: redis
+  redis_url: redis://localhost:6379/0
+  namespace: driftcut-dev
+  response_cache:
+    enabled: true
+    ttl_seconds: 604800
+  run_history:
+    enabled: true
+    ttl_seconds: 2592000
+```
+
+| Field | Default | Description |
+|---|---|---|
+| `backend` | `redis` | Current memory backend |
+| `redis_url` | none | Redis connection URL |
+| `namespace` | `driftcut` | Prefix used for cache and run-history keys |
+| `response_cache.enabled` | `true` | Reuse cached baseline responses in live runs |
+| `response_cache.ttl_seconds` | `604800` | Cache TTL in seconds (7 days) |
+| `run_history.enabled` | `true` | Persist completed run payloads to Redis |
+| `run_history.ttl_seconds` | `2592000` | Run-history TTL in seconds (30 days) |
+
+!!! note "Baseline cache semantics"
+    Cached baseline responses are intentionally excluded from live latency comparison. Driftcut reuses the output and records cache hits and saved baseline cost, but it does not treat cached latency as fresh live latency evidence.
+
+!!! note "Failure behavior"
+    Redis is optional. If the memory layer is disabled, Driftcut behaves exactly as before. If Redis is configured but temporarily unavailable at runtime, Driftcut falls back to the normal live path instead of failing the migration gate.
+
 ### `output`
 
 Controls what gets saved after a run.

@@ -47,6 +47,7 @@ Driftcut answers a simpler question first:
 - Deterministic checks for format, JSON validity, required content, and output length limits
 - Tiered judging with light-to-heavy escalation for ambiguous prompts
 - Latency tracking plus baseline, candidate, and judge cost tracking
+- Optional Redis memory for baseline caching and run-history persistence
 - `STOP` / `CONTINUE` / `PROCEED` decisions during the run
 - JSON results export
 - HTML report generation
