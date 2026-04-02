@@ -3,7 +3,7 @@
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. Phases 1-7 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, historical replay, and optional Redis-backed memory with local Docker setup. The next milestone is richer failure archetypes plus stronger quality scoring.
+    Driftcut is in active development. Phases 1-8 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, historical replay, optional Redis-backed memory with local Docker setup, and richer quality scoring with category scorecards.
 
 ---
 
@@ -66,18 +66,21 @@
 
 ---
 
-## What's next
-
-### Phase 8 - Quality Scoring, Polish & Launch
+### Phase 8 - Quality Scoring, Polish & Launch :white_check_mark:
 
 - Better per-category quality scoring
 - Richer failure archetypes beyond deterministic checks and `judge_worse`
-- Public demo benchmark
-- PyPI package publish
+- Category-aware decision reasoning in console, JSON, and HTML output
+- HTML reports now show category scorecards and richer semantic failure buckets
 
 ---
 
-## Future ideas (post-MVP)
+## What's next
+
+### Phase 9 - Launch Polish
+
+- Public demo benchmark
+- PyPI package publish
 
 These are not committed. They will only be built if real demand emerges.
 

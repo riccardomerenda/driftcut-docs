@@ -2,7 +2,7 @@
 
 **Early-stop decision gating for LLM model migrations.**
 
-v0.7.0 alpha CLI for sampling migration candidates before you commit to a full evaluation.
+v0.8.0 alpha CLI for sampling migration candidates before you commit to a full evaluation.
 
 ---
 
@@ -35,7 +35,7 @@ Driftcut answers a simpler question first:
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. The current alpha already ships deterministic checks, tiered judge escalation for ambiguous prompts, historical replay, failure archetype summaries, and `STOP` / `CONTINUE` / `PROCEED` decisions.
+    Driftcut is in active development. The current alpha already ships deterministic checks, tiered judge escalation for ambiguous prompts, historical replay, richer failure archetype summaries, per-category scorecards, and `STOP` / `CONTINUE` / `PROCEED` decisions.
 
 ### What works today
 
@@ -51,12 +51,13 @@ Driftcut answers a simpler question first:
 - `STOP` / `CONTINUE` / `PROCEED` decisions during the run
 - JSON results export
 - HTML report generation
+- Per-category quality scorecards in JSON and HTML output
+- Richer semantic failure archetypes such as `refusal_regression`, `instruction_miss`, and `incomplete_answer`
 
 ### What comes next
 
-- Better per-category quality scoring
-- Richer failure archetypes beyond deterministic checks and `judge_worse`
 - More polished reports and benchmark demos
+- PyPI package publish
 
 ## See the output
 
@@ -91,6 +92,7 @@ Run complete
   Latency p95:    1480ms (baseline) -> 1100ms (candidate)
   Decision:       PROCEED (82% confidence)
   Reason:         Risk stayed below the configured proceed threshold.
+  Top category:   extraction (11% risk | json_invalid x2)
 ```
 
 ### `results.json` excerpt
@@ -103,6 +105,22 @@ Run complete
     "confidence": 0.82,
     "reason": "Risk stayed below the configured proceed threshold."
   },
+  "decision_history": [
+    {
+      "outcome": "PROCEED",
+      "metrics": {
+        "category_scores": [
+          {
+            "category": "extraction",
+            "overall_risk": 0.11,
+            "archetypes": {
+              "json_invalid": 2
+            }
+          }
+        ]
+      }
+    }
+  ],
   "cost": {
     "baseline_usd": 0.184,
     "candidate_usd": 0.1,

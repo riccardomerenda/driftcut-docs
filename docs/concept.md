@@ -55,7 +55,7 @@ Migration isn't just about output quality. Driftcut compares baseline and candid
 
 Output quality relative to the baseline: format adherence, completeness, correctness, absence of obvious structural breaks.
 
-The current alpha already combines deterministic checks with tiered judge-based comparison for ambiguous prompts. The next quality milestones are richer archetypes beyond the current deterministic set and `judge_worse`, plus better per-category quality scoring.
+The current alpha already combines deterministic checks with tiered judge-based comparison for ambiguous prompts, richer semantic archetypes, and per-category quality scoring.
 
 ### Latency :white_check_mark:
 
@@ -127,9 +127,14 @@ The report won't just say "quality drop." It classifies concrete failure modes t
 | **missing_required_content** | Required substring was not found |
 | **forbidden_content** | Forbidden substring was found |
 | **overlong_output** | Output exceeded `max_output_chars` |
-| **judge_worse** | Judge found the candidate materially worse than baseline |
+| **refusal_regression** | Candidate refused or deflected a task the baseline completed |
+| **instruction_miss** | Candidate missed the core task even though it remained syntactically valid |
+| **incomplete_answer** | Candidate dropped useful detail or coverage relative to baseline |
+| **format_drift** | Candidate drifted away from the expected presentation or structure |
+| **hallucination_risk** | Judge flagged unsupported or fabricated content risk |
+| **semantic_regression** | Candidate was materially worse in meaning, but no more specific semantic bucket applied |
 
-This turns an abstract score into actionable information. Broader qualitative archetypes such as tone or reasoning degradation are still future work.
+This turns an abstract score into actionable information. Broader qualitative archetypes such as tone-specific regressions are still future work.
 
 ---
 
@@ -153,7 +158,7 @@ A typical canary run (120 prompts, 20% tested, 24 prompts) costs roughly $0.50-$
 
 ## Statistical confidence
 
-### Current approach (v0.7.0)
+### Current approach (v0.8.0)
 
 Driftcut uses a pragmatic approach:
 
