@@ -153,7 +153,7 @@ A typical canary run (120 prompts, 20% tested, 24 prompts) costs roughly $0.50-$
 
 ## Statistical confidence
 
-### Current approach (v0.6.0)
+### Current approach (v0.7.0)
 
 Driftcut uses a pragmatic approach:
 

@@ -2,7 +2,7 @@
 
 **Early-stop decision gating for LLM model migrations.**
 
-v0.6.0 alpha CLI for sampling migration candidates before you commit to a full evaluation.
+v0.7.0 alpha CLI for sampling migration candidates before you commit to a full evaluation.
 
 ---
 

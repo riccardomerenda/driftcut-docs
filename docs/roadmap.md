@@ -3,7 +3,7 @@
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. Phases 1-6 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, and historical replay. The next milestone is richer failure archetypes plus stronger quality scoring.
+    Driftcut is in active development. Phases 1-7 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, historical replay, and optional Redis-backed memory with local Docker setup. The next milestone is richer failure archetypes plus stronger quality scoring.
 
 ---
 
@@ -57,11 +57,18 @@
 - Shared deterministic checks, judge flow, and decision engine between live and replay
 - Replay-aware JSON and HTML report labeling
 
+### Phase 7 - Memory Layer & Local Dev :white_check_mark:
+
+- Optional Redis-backed baseline response caching for repeated live runs
+- Searchable run-history persistence with the same canonical payload used for JSON exports
+- Cache-hit, miss, and saved-cost reporting in JSON and HTML outputs
+- Docker and Compose assets for reproducible local Redis-backed testing
+
 ---
 
 ## What's next
 
-### Phase 7 - Quality Scoring, Polish & Launch
+### Phase 8 - Quality Scoring, Polish & Launch
 
 - Better per-category quality scoring
 - Richer failure archetypes beyond deterministic checks and `judge_worse`
