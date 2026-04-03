@@ -5,7 +5,20 @@
 Driftcut requires Python 3.12 or later.
 
 ```bash
-# Clone and install from source (PyPI package coming soon)
+# Install from PyPI
+pip install driftcut
+```
+
+For Redis-backed memory support:
+
+```bash
+pip install "driftcut[redis]"
+```
+
+If you want the editable developer workflow instead:
+
+```bash
+# Clone and install from source
 git clone https://github.com/riccardomerenda/driftcut.git
 cd driftcut
 pip install -e .

@@ -72,6 +72,7 @@
 - Richer failure archetypes beyond deterministic checks and `judge_worse`
 - Category-aware decision reasoning in console, JSON, and HTML output
 - HTML reports now show category scorecards and richer semantic failure buckets
+- PyPI package publish
 
 ---
 
@@ -80,7 +81,6 @@
 ### Phase 9 - Launch Polish
 
 - Public demo benchmark
-- PyPI package publish
 
 These are not committed. They will only be built if real demand emerges.
 

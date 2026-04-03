@@ -57,7 +57,6 @@ Driftcut answers a simpler question first:
 ### What comes next
 
 - More polished reports and benchmark demos
-- PyPI package publish
 
 ## See the output
 
@@ -149,7 +148,7 @@ Run complete
 You also get an HTML report with the same decision, threshold context, latency/cost summary, failure archetypes, and prompt examples.
 
 ```bash
-pip install driftcut          # coming soon - install from source for now
+pip install driftcut
 driftcut validate --config migration.yaml
 driftcut run --config migration.yaml
 driftcut replay --config replay.yaml --input replay.json
