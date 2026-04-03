@@ -2,7 +2,7 @@
 
 **Early-stop decision gating for LLM model migrations.**
 
-v0.8.0 alpha CLI for sampling migration candidates before you commit to a full evaluation.
+v0.9.0 alpha CLI for sampling migration candidates before you commit to a full evaluation.
 
 ---
 
@@ -35,7 +35,7 @@ Driftcut answers a simpler question first:
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. The current alpha already ships deterministic checks, tiered judge escalation for ambiguous prompts, historical replay, richer failure archetype summaries, per-category scorecards, and `STOP` / `CONTINUE` / `PROCEED` decisions.
+    Driftcut is in active development. The current alpha ships `driftcut init` scaffolding, deterministic checks, tiered judge escalation for ambiguous prompts, historical replay, richer failure archetype summaries, per-category scorecards, and `STOP` / `CONTINUE` / `PROCEED` decisions.
 
 ### What works today
 
@@ -53,6 +53,7 @@ Driftcut answers a simpler question first:
 - HTML report generation
 - Per-category quality scorecards in JSON and HTML output
 - Richer semantic failure archetypes such as `refusal_regression`, `instruction_miss`, and `incomplete_answer`
+- `driftcut init` scaffolding for instant project setup
 
 ### What comes next
 
@@ -149,6 +150,7 @@ You also get an HTML report with the same decision, threshold context, latency/c
 
 ```bash
 pip install driftcut
+driftcut init
 driftcut validate --config migration.yaml
 driftcut run --config migration.yaml
 driftcut replay --config replay.yaml --input replay.json

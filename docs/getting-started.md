@@ -48,6 +48,28 @@ docker compose run --rm driftcut driftcut run --config examples/migration.redis.
 
 The second run should report baseline cache hits in the terminal summary and `driftcut-results/results.json`.
 
+## Scaffold a new project
+
+The fastest way to get started is `driftcut init`:
+
+```bash
+driftcut init
+```
+
+This generates a working `migration.yaml` and `prompts.csv` in the current directory. You can customize the models:
+
+```bash
+driftcut init --baseline azure/gpt-4-turbo --candidate openrouter/mistral-large
+```
+
+Or scaffold into a specific directory:
+
+```bash
+driftcut init --dir ./my-migration
+```
+
+The generated files pass `driftcut validate` immediately — edit the corpus with your real prompts and you are ready to run.
+
 ## Prepare your corpus
 
 Driftcut needs a structured prompt corpus: the real prompts your system uses in production. Each prompt must have a category and criticality level, and can optionally include deterministic expectations.

@@ -3,7 +3,7 @@
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. Phases 1-8 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, historical replay, optional Redis-backed memory with local Docker setup, and richer quality scoring with category scorecards.
+    Driftcut is in active development. Phases 1-9 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, historical replay, optional Redis-backed memory with local Docker setup, richer quality scoring with category scorecards, and project scaffolding.
 
 ---
 
@@ -76,9 +76,18 @@
 
 ---
 
+### Phase 9 - Project Scaffolding :white_check_mark:
+
+- `driftcut init` command to generate a working `migration.yaml` and `prompts.csv`
+- `--baseline` and `--candidate` flags for custom model pre-fill
+- `--dir` flag for target directory and `--force` flag for overwrite
+- Generated files pass `driftcut validate` out of the box
+
+---
+
 ## What's next
 
-### Phase 9 - Launch Polish
+### Phase 10 - Launch Polish
 
 - Public demo benchmark
 

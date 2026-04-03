@@ -1,6 +1,6 @@
 # CLI Reference
 
-Driftcut currently exposes three main commands plus a global version flag.
+Driftcut currently exposes four main commands plus a global version flag.
 
 ## Global options
 
@@ -10,6 +10,33 @@ driftcut -v
 ```
 
 Print the installed Driftcut version and exit.
+
+## `driftcut init`
+
+Scaffold a new migration config and sample corpus.
+
+```bash
+driftcut init
+driftcut init --baseline azure/gpt-4-turbo --candidate openrouter/mistral-large
+driftcut init --dir ./my-migration
+driftcut init --force
+```
+
+### Options
+
+| Flag | Required | Default | Description |
+|---|---|---|---|
+| `--dir`, `-d` | no | `.` | Directory to create files in |
+| `--baseline`, `-b` | no | `openai/gpt-4o` | Baseline model in `provider/model` format |
+| `--candidate`, `-c` | no | `anthropic/claude-haiku` | Candidate model in `provider/model` format |
+| `--force`, `-f` | no | `false` | Overwrite existing files |
+
+### What it does
+
+- Creates a `migration.yaml` with sensible defaults and the specified models
+- Creates a `prompts.csv` with 6 sample prompts across 3 categories
+- Refuses to overwrite existing files unless `--force` is passed
+- The generated files pass `driftcut validate` immediately
 
 ## `driftcut validate`
 
