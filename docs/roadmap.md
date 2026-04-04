@@ -3,7 +3,7 @@
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. Phases 1-9 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, historical replay, optional Redis-backed memory with local Docker setup, richer quality scoring with category scorecards, and project scaffolding.
+    Driftcut is in active development. Phases 1-10 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, historical replay, optional Redis-backed memory with local Docker setup, richer quality scoring with category scorecards, project scaffolding, and corpus bootstrap.
 
 ---
 
@@ -83,11 +83,18 @@
 - `--dir` flag for target directory and `--force` flag for overwrite
 - Generated files pass `driftcut validate` out of the box
 
+### Phase 10 - Corpus Bootstrap :white_check_mark:
+
+- `driftcut bootstrap --input raw-prompts.txt` command to classify raw prompts via LLM
+- Accepts plain text, CSV, and JSON input formats
+- Auto-generates IDs, categories, criticality, and expected output types
+- Normalizes invalid LLM responses to safe defaults
+
 ---
 
 ## What's next
 
-### Phase 10 - Launch Polish
+### Phase 11 - Launch Polish
 
 - Public demo benchmark
 

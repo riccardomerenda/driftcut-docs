@@ -70,6 +70,26 @@ driftcut init --dir ./my-migration
 
 The generated files pass `driftcut validate` immediately — edit the corpus with your real prompts and you are ready to run.
 
+## Bootstrap a corpus from raw prompts
+
+If you have prompts but they aren't categorized yet, `bootstrap` does it for you using an LLM:
+
+```bash
+driftcut bootstrap --input raw-prompts.txt --output prompts.csv
+```
+
+Accepts `.txt` (one prompt per line or paragraph-separated), `.csv` (must have a `prompt` column), or `.json` (array of strings or objects with a `prompt` key).
+
+```bash
+# Custom model and output path
+driftcut bootstrap --input prompts.json --model openai/gpt-4.1-mini --output corpus.csv
+```
+
+The LLM assigns a category, criticality, and expected output type to each prompt. IDs are auto-generated from the inferred categories. Review and edit the output before running — the LLM suggestions are a starting point, not final.
+
+!!! tip "Bootstrap cost"
+    Bootstrap uses a single cheap LLM call per batch of 20 prompts. Classifying 100 prompts typically costs under $0.05 with `gpt-4.1-mini`.
+
 ## Prepare your corpus
 
 Driftcut needs a structured prompt corpus: the real prompts your system uses in production. Each prompt must have a category and criticality level, and can optionally include deterministic expectations.

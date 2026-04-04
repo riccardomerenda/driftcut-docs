@@ -1,6 +1,6 @@
 # CLI Reference
 
-Driftcut currently exposes four main commands plus a global version flag.
+Driftcut currently exposes five main commands plus a global version flag.
 
 ## Global options
 
@@ -37,6 +37,60 @@ driftcut init --force
 - Creates a `prompts.csv` with 6 sample prompts across 3 categories
 - Refuses to overwrite existing files unless `--force` is passed
 - The generated files pass `driftcut validate` immediately
+
+## `driftcut bootstrap`
+
+Classify raw prompts into a structured Driftcut corpus using an LLM.
+
+```bash
+driftcut bootstrap --input raw-prompts.txt
+driftcut bootstrap --input prompts.json --model openai/gpt-4.1-mini --output corpus.csv
+driftcut bootstrap --input raw.csv --output prompts.csv --force
+```
+
+### Options
+
+| Flag | Required | Default | Description |
+|---|---|---|---|
+| `--input`, `-i` | yes | none | Path to raw prompts file (`.txt`, `.csv`, or `.json`) |
+| `--output`, `-o` | no | `prompts.csv` | Path to write the structured corpus CSV |
+| `--model`, `-m` | no | `openai/gpt-4.1-mini` | Model to use for classification |
+| `--force`, `-f` | no | `false` | Overwrite existing output file |
+
+### What it does
+
+- Loads prompts from text (one per line or paragraph), CSV (needs a `prompt` column), or JSON (array of strings or objects)
+- Sends batches of 20 prompts to the classification model
+- Assigns category, criticality, and expected output type to each prompt
+- Auto-generates IDs from inferred categories when none are provided
+- Writes a standard Driftcut corpus CSV that passes `driftcut validate`
+
+### Input formats
+
+**Text** — one prompt per line, or paragraphs separated by blank lines:
+
+```text
+Summarize this article about climate change.
+Extract all person names and organizations from the following paragraph.
+Classify this customer review as positive, negative, or neutral.
+```
+
+**CSV** — must have a `prompt` column, optionally `id`:
+
+```csv
+id,prompt
+p1,Summarize this article about climate change.
+p2,Extract all person names and organizations.
+```
+
+**JSON** — array of strings or objects with a `prompt` key:
+
+```json
+[
+  "Summarize this article about climate change.",
+  {"id": "p2", "prompt": "Extract all person names and organizations."}
+]
+```
 
 ## `driftcut validate`
 
