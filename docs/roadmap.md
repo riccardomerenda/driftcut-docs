@@ -3,7 +3,7 @@
 ## Current status
 
 !!! warning "Pre-release"
-    Driftcut is in active development. Phases 1-10 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, historical replay, optional Redis-backed memory with local Docker setup, richer quality scoring with category scorecards, project scaffolding, and corpus bootstrap.
+    Driftcut is in active development. Phases 1-11 are now materially in place in the alpha: validation, execution, deterministic checks, decision output, HTML reporting, tiered judging for ambiguous cases, historical replay, optional Redis-backed memory with local Docker setup, richer quality scoring with category scorecards, project scaffolding, corpus bootstrap, and run comparison.
 
 ---
 
@@ -90,11 +90,18 @@
 - Auto-generates IDs, categories, criticality, and expected output types
 - Normalizes invalid LLM responses to safe defaults
 
+### Phase 11 - Run Comparison :white_check_mark:
+
+- `driftcut diff --before results-v1.json --after results-v2.json` command
+- Decision change, metric deltas, per-category risk shifts, cost differences
+- Archetype additions and removals between runs
+- Color-coded Rich output: green for improvements, red for regressions
+
 ---
 
 ## What's next
 
-### Phase 11 - Launch Polish
+### Phase 12 - Launch Polish
 
 - Public demo benchmark
 

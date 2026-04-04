@@ -346,3 +346,13 @@ Replay mode expects a canonical JSON payload with prompt metadata plus nested `b
 
 !!! note "Replay semantics"
     Replay can still incur judge cost if semantic judging is enabled. Historical latency fields are required when `latency.track=true`.
+
+## Compare two runs
+
+After running migration tests with different candidates or configs, compare the results:
+
+```bash
+driftcut diff --before driftcut-results/results-v1.json --after driftcut-results/results-v2.json
+```
+
+This shows decision changes, metric deltas, per-category risk shifts, cost differences, and which failure archetypes were added or removed. Color-coded output highlights improvements in green and regressions in red.

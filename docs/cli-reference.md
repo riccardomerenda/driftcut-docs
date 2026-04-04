@@ -1,6 +1,6 @@
 # CLI Reference
 
-Driftcut currently exposes five main commands plus a global version flag.
+Driftcut currently exposes six main commands plus a global version flag.
 
 ## Global options
 
@@ -164,6 +164,54 @@ driftcut replay --config examples/replay.yaml --input examples/replay.json --see
 - Loads the canonical replay JSON payload
 - Reuses the same sampler, deterministic checks, judge flow, and decision engine as live mode
 - Writes replay-labeled JSON and HTML outputs
+
+## `driftcut diff`
+
+Compare two Driftcut result files to see what changed between migration attempts.
+
+```bash
+driftcut diff --before results-v1.json --after results-v2.json
+```
+
+### Options
+
+| Flag | Required | Description |
+|---|---|---|
+| `--before`, `-b` | yes | Path to the earlier results JSON file |
+| `--after`, `-a` | yes | Path to the later results JSON file |
+
+### What it does
+
+- Loads two `results.json` files and validates they are Driftcut outputs
+- Shows decision changes between runs (e.g. STOP to PROCEED)
+- Compares key metrics: overall risk, failure rates, schema breaks, latency ratios
+- Shows per-category risk deltas with color-coded improvements and regressions
+- Lists failure archetypes that were added or removed between runs
+- Displays cost difference between the two runs
+
+### Example output
+
+```text
+$ driftcut diff --before run1/results.json --after run2/results.json
+
+ Decision
+  Before: STOP   After: PROCEED
+
+ Coverage
+  Prompts:  20 → 24
+  Batches:  3 → 2
+  Cost:     $0.42 → $0.31  (-$0.11)
+
+ Metrics
+  Overall risk:      0.15 → 0.06  (-0.09 ↓)
+  Schema break rate:  0.10 → 0.00  (-0.10 ↓)
+
+ Categories
+  extraction:  0.22 → 0.08  (-0.14 ↓)
+  support:     0.05 → 0.04  (-0.01 ↓)
+
+ Archetypes removed: json_invalid, missing_json_keys
+```
 
 ## Output paths
 
