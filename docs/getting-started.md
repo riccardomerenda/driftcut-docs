@@ -1,5 +1,8 @@
 # Getting Started
 
+!!! tip "Want to see it on a real migration first?"
+    The app repo ships an end-to-end demo at [`examples/demo/`](https://github.com/riccardomerenda/driftcut/tree/main/examples/demo) that reproduces a real `gpt-4o` cost-cut decision against `gpt-4o-mini` and `claude-3.5-haiku`. The replay configs run fully offline without an API key, so you can see what Driftcut tells you in about a minute.
+
 ## Installation
 
 Driftcut requires Python 3.12 or later.

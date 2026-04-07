@@ -74,7 +74,7 @@ API keys are loaded from environment variables following each provider's convent
 Driftcut uses [LiteLLM](https://docs.litellm.ai/) under the hood, so any LiteLLM-supported provider works.
 
 !!! note "Live call reliability"
-    In `v0.11.0`, live `run` calls automatically retry transient rate limits, timeouts, connection failures, and 5xx responses before Driftcut records an `api_error`. Saved JSON artifacts include `retry_count` for each baseline/candidate response.
+    In `v0.11.1`, live `run` calls automatically retry transient rate limits, timeouts, connection failures, and 5xx responses before Driftcut records an `api_error`. Saved JSON artifacts include `retry_count` for each baseline/candidate response.
 
 ### `corpus`
 
@@ -97,7 +97,7 @@ Controls how prompts are sampled into batches.
 | `min_batches` | `2` | Minimum evidence before Driftcut can declare `PROCEED` |
 
 !!! note "Current alpha behavior"
-    `min_batches` is active in `v0.11.0`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
+    `min_batches` is active in `v0.11.1`: Driftcut will not declare `PROCEED` until at least this many batches have been evaluated.
 
 ### `risk`
 
@@ -143,7 +143,7 @@ Controls latency tracking and regression detection.
 | `regression_threshold_p95` | `2.0` | Flag if candidate p95 is greater than 2.0x baseline |
 
 !!! note "Current alpha behavior"
-    Latency is measured and reported today. The thresholds are active decision inputs in `v0.11.0`.
+    Latency is measured and reported today. The thresholds are active decision inputs in `v0.11.1`.
 
 ### Replay mode
 
@@ -164,7 +164,7 @@ Historical model cost is optional. Replay-time judge cost is tracked separately 
 
 ### Decision outputs
 
-In `v0.11.0`, Driftcut reports:
+In `v0.11.1`, Driftcut reports:
 
 - multiple `failure_archetypes` per prompt when a response breaks in more than one way
 - `category_scores` in the run-level metrics for JSON and HTML outputs

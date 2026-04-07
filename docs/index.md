@@ -2,7 +2,7 @@
 
 **Early-stop decision gating for LLM model migrations.**
 
-v0.11.0 alpha CLI for sampling migration candidates before you commit to a full evaluation.
+v0.11.1 alpha CLI for sampling migration candidates before you commit to a full evaluation.
 
 ---
 
@@ -56,10 +56,12 @@ Driftcut answers a simpler question first:
 - `driftcut init` scaffolding for instant project setup
 - `driftcut bootstrap` to classify raw prompts into a structured corpus via LLM
 - `driftcut diff` to compare two runs and surface metric, category, and archetype changes
+- A real cost-cut demo under [`examples/demo/`](https://github.com/riccardomerenda/driftcut/tree/main/examples/demo) in the app repo, with offline replay configs
 
 ### What comes next
 
-- More polished reports and benchmark demos
+- More real-world case studies and packaging polish
+- Sequential hypothesis testing for formal confidence (demand-driven)
 
 ## See the output
 

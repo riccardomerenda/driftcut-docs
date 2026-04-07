@@ -97,15 +97,17 @@
 - Archetype additions and removals between runs
 - Color-coded Rich output: green for improvements, red for regressions
 
+### Phase 12 - Public Benchmark Demo :white_check_mark:
+
+- End-to-end cost-cut walkthrough under [`examples/demo/`](https://github.com/riccardomerenda/driftcut/tree/main/examples/demo) in the app repo
+- Compares `gpt-4o` against `gpt-4o-mini` and `claude-3.5-haiku`, surfacing complementary failure profiles per category
+- Replay configs reproduce both `STOP` decisions deterministically without any API key
+
 ---
 
 ## What's next
 
-### Phase 12 - Launch Polish
-
-- Public demo benchmark
-
-These are not committed. They will only be built if real demand emerges.
+Nothing committed. The next items would only be built if real demand emerges.
 
 - **Sequential hypothesis testing** (SPRT) for more formal confidence estimates
 - **Corpus bootstrap helper** to suggest categories and criticality from unstructured prompts
