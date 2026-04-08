@@ -110,7 +110,6 @@
 Nothing committed. The next items would only be built if real demand emerges.
 
 - **Sequential hypothesis testing** (SPRT) for more formal confidence estimates
-- **Corpus bootstrap helper** to suggest categories and criticality from unstructured prompts
 - **CI/CD integration** to run Driftcut as a migration gate in pipelines
 - **Web dashboard** for history, cross-run comparison, and collaboration
 - **Scheduled checks** for periodic canary runs against production models
